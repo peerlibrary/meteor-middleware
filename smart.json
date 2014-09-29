@@ -1,0 +1,11 @@
+{
+  "name": "middleware",
+  "description": "Middleware support for Meteor publish functions",
+  "homepage": "https://github.com/peerlibrary/meteor-middleware",
+  "author": "The PeerLibrary Project",
+  "version": "0.1.0",
+  "git": "https://github.com/peerlibrary/meteor-middleware.git",
+  "packages": {
+    "assert": {}
+  }
+}

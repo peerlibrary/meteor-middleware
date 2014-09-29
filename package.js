@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "Meteor publish middleware support"
+  summary: "Middleware support for Meteor publish functions"
 });
 
 Package.on_use(function (api) {
@@ -15,5 +15,6 @@ Package.on_use(function (api) {
 
 Package.on_test(function (api) {
   api.use(['middleware', 'tinytest', 'test-helpers', 'coffeescript', 'insecure', 'random', 'assert', 'underscore'], ['client', 'server']);
+
   api.add_files('tests.coffee', ['client', 'server']);
 });
