@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Middleware support for Meteor publish functions",
-  version: '0.1.0',
+  version: '0.1.1',
   name: 'peerlibrary:middleware',
   git: 'https://github.com/peerlibrary/meteor-middleware.git'
 });
