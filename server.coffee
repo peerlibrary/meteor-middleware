@@ -53,13 +53,13 @@ class globals.PublishEndpoint
 
     self = @
 
-    Meteor.publish @options.name, ->
+    Meteor.publish @options.name, (args...) ->
       publish = @
 
       state = {}
 
       publish.params = ->
-        @_params
+        args
 
       publish.set = (key, value) ->
         state[key] = value
