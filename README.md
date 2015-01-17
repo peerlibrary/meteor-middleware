@@ -23,7 +23,7 @@ Installation
 ------------
 
 ```
-mrt add middleware
+meteor add peerlibrary:middleware
 ```
 
 Publish endpoints
