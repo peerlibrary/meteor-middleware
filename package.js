@@ -1,24 +1,52 @@
 Package.describe({
-  summary: "Middleware support for Meteor publish functions",
-  version: '0.1.1',
   name: 'peerlibrary:middleware',
+  summary: "Middleware support for Meteor publish functions",
+  version: '0.2.0',
   git: 'https://github.com/peerlibrary/meteor-middleware.git'
 });
 
-Package.on_use(function (api) {
-  api.versionsFrom('METEOR@0.9.3');
-  api.use(['coffeescript', 'underscore'], 'server');
+Package.onUse(function (api) {
+  api.versionsFrom('METEOR@1.3.4.4');
 
-  api.export('PublishEndpoint');
-  api.export('PublishMiddleware');
+  // Core dependencies.
+  api.use([
+    'coffeescript@2.0.3_1',
+    'ecmascript',
+    'underscore'
+  ], 'server');
 
-  api.add_files([
+  api.export('PublishEndpoint', 'server');
+  api.export('PublishMiddleware', 'server');
+
+  api.addFiles([
     'server.coffee'
   ], 'server');
 });
 
-Package.on_test(function (api) {
-  api.use(['peerlibrary:middleware', 'tinytest', 'test-helpers', 'coffeescript', 'insecure', 'random', 'peerlibrary:assert', 'underscore'], ['client', 'server']);
+Package.onTest(function (api) {
+  api.versionsFrom('METEOR@1.3.4.4');
 
-  api.add_files('tests.coffee', ['client', 'server']);
+  api.use([
+    'coffeescript@2.0.3_1',
+    'ecmascript',
+    'tinytest',
+    'test-helpers',
+    'insecure',
+    'random',
+    'underscore'
+  ]);
+
+  // Internal dependencies.
+  api.use([
+    'peerlibrary:middleware'
+  ]);
+
+  // 3rd party dependencies.
+  api.use([
+    'peerlibrary:assert@0.2.5'
+  ]);
+
+  api.addFiles([
+    'tests.coffee'
+  ]);
 });

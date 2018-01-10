@@ -24,7 +24,7 @@ if Meteor.isServer
 
   class TestMiddleware extends PublishMiddleware
     constructor: (@name) ->
-      super
+      super()
 
     added: (publish, collection, id, fields) =>
       assert.equal publish.params().length, 2
@@ -34,7 +34,7 @@ if Meteor.isServer
         type: 'added'
         args: [collection, id, fields]
 
-      super
+      super()
 
     changed: (publish, collection, id, fields) =>
       assert.equal publish.params().length, 2
@@ -44,7 +44,7 @@ if Meteor.isServer
         type: 'changed'
         args: [collection, id, fields]
 
-      super
+      super()
 
     removed: (publish, collection, id) =>
       assert.equal publish.params().length, 2
@@ -54,7 +54,7 @@ if Meteor.isServer
         type: 'removed'
         args: [collection, id]
 
-      super
+      super()
 
     onReady: (publish) =>
       assert.equal publish.params().length, 2
@@ -64,7 +64,7 @@ if Meteor.isServer
         type: 'onReady'
         args: []
 
-      super
+      super()
 
     onStop: (publish) =>
       assert.equal publish.params().length, 2
@@ -74,7 +74,7 @@ if Meteor.isServer
         type: 'onStop'
         args: []
 
-      super
+      super()
 
     onError: (publish, error) =>
       # Here we only check if params exists, but not really
@@ -86,18 +86,18 @@ if Meteor.isServer
         type: 'error'
         args: [error]
 
-      super
+      super()
 
   class HasPostsMiddleware extends PublishMiddleware
     added: (publish, collection, id, fields) =>
       fields.hasPosts = !!fields.posts
 
-      super
+      super()
 
     changed: (publish, collection, id, fields) =>
       fields.hasPosts = !!fields.posts if 'posts' of fields
 
-      super
+      super()
 
   allUsers.use new TestMiddleware 'first'
   allUsers.use new HasPostsMiddleware()

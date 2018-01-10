@@ -1,7 +1,8 @@
-Fiber = Npm.require 'fibers'
-savedYield = Fiber.yield
+import {_} from 'meteor/underscore'
 
-globals = @
+import Fiber from 'fibers'
+
+savedYield = Fiber.yield
 
 # When inside Meteor._noYieldsAllowed Fiber.yield is overridden with
 # a function which throws an exception, so is not savedYield anymore.
@@ -42,7 +43,7 @@ class MiddlewarePublish
   error: (args...) =>
     @_publishError args...
 
-class globals.PublishEndpoint
+export class PublishEndpoint
   constructor: (@options, @publishFunction) ->
     # To pass null (autopublish) or string directly for name
     if @options is null or _.isString @options
@@ -112,7 +113,7 @@ class globals.PublishEndpoint
 
     @middlewares.push middleware
 
-class globals.PublishMiddleware
+export class PublishMiddleware
   added: (publish, collection, id, fields) =>
     publish.added collection, id, fields
 
@@ -130,6 +131,3 @@ class globals.PublishMiddleware
 
   onError: (publish, error) =>
     publish.error error
-
-PublishEndpoint = globals.PublishEndpoint
-PublishMiddleware = globals.PublishMiddleware
