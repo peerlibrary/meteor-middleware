@@ -1,5 +1,4 @@
 import {_} from 'meteor/underscore'
-
 import Fiber from 'fibers'
 
 savedYield = Fiber.yield

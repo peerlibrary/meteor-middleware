@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('METEOR@1.3.4.4');
+  api.versionsFrom('METEOR@1.4.4.5');
 
   // Core dependencies.
   api.use([
@@ -18,13 +18,11 @@ Package.onUse(function (api) {
   api.export('PublishEndpoint', 'server');
   api.export('PublishMiddleware', 'server');
 
-  api.addFiles([
-    'server.coffee'
-  ], 'server');
+  api.mainModule('server.coffee', 'server');
 });
 
 Package.onTest(function (api) {
-  api.versionsFrom('METEOR@1.3.4.4');
+  api.versionsFrom('METEOR@1.4.4.5');
 
   api.use([
     'coffeescript@2.0.3_1',
