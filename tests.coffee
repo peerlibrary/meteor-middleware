@@ -26,7 +26,7 @@ if Meteor.isServer
     constructor: (@name) ->
       super()
 
-    added: (publish, collection, id, fields) =>
+    added: (publish, collection, id, fields) ->
       assert.equal publish.params().length, 2
 
       LogActions.insert
@@ -34,9 +34,9 @@ if Meteor.isServer
         type: 'added'
         args: [collection, id, fields]
 
-      super()
+      super publish, collection, id, fields
 
-    changed: (publish, collection, id, fields) =>
+    changed: (publish, collection, id, fields) ->
       assert.equal publish.params().length, 2
 
       LogActions.insert
@@ -44,9 +44,9 @@ if Meteor.isServer
         type: 'changed'
         args: [collection, id, fields]
 
-      super()
+      super publish, collection, id, fields
 
-    removed: (publish, collection, id) =>
+    removed: (publish, collection, id) ->
       assert.equal publish.params().length, 2
 
       LogActions.insert
@@ -54,9 +54,9 @@ if Meteor.isServer
         type: 'removed'
         args: [collection, id]
 
-      super()
+      super publish, collection, id
 
-    onReady: (publish) =>
+    onReady: (publish) ->
       assert.equal publish.params().length, 2
 
       LogActions.insert
@@ -64,9 +64,9 @@ if Meteor.isServer
         type: 'onReady'
         args: []
 
-      super()
+      super publish
 
-    onStop: (publish) =>
+    onStop: (publish) ->
       assert.equal publish.params().length, 2
 
       LogActions.insert
@@ -74,9 +74,9 @@ if Meteor.isServer
         type: 'onStop'
         args: []
 
-      super()
+      super publish
 
-    onError: (publish, error) =>
+    onError: (publish, error) ->
       # Here we only check if params exists, but not really
       # the content, so that the error can propagate.
       assert publish.params
@@ -86,18 +86,18 @@ if Meteor.isServer
         type: 'error'
         args: [error]
 
-      super()
+      super publish, error
 
   class HasPostsMiddleware extends PublishMiddleware
-    added: (publish, collection, id, fields) =>
+    added: (publish, collection, id, fields) ->
       fields.hasPosts = !!fields.posts
 
-      super()
+      super publish, collection, id, fields
 
-    changed: (publish, collection, id, fields) =>
+    changed: (publish, collection, id, fields) ->
       fields.hasPosts = !!fields.posts if 'posts' of fields
 
-      super()
+      super publish, collection, id, fields
 
   allUsers.use new TestMiddleware 'first'
   allUsers.use new HasPostsMiddleware()
@@ -216,9 +216,10 @@ if Meteor.isClient
             type: 'error'
             args: [
               actual: 'a'
+              code: 'ERR_ASSERTION'
               expected: 'first'
-              message: '"a" == "first"'
-              name: 'AssertionError'
+              generatedMessage: true
+              name: 'AssertionError [ERR_ASSERTION]'
               operator: '=='
             ]
           ,
@@ -226,9 +227,10 @@ if Meteor.isClient
             type: 'error'
             args: [
               actual: 'a'
+              code: 'ERR_ASSERTION'
               expected: 'first'
-              message: '"a" == "first"'
-              name: 'AssertionError'
+              generatedMessage: true
+              name: 'AssertionError [ERR_ASSERTION]'
               operator: '=='
             ]
   ,
@@ -254,9 +256,10 @@ if Meteor.isClient
             type: 'error'
             args: [
               actual: false
+              code: 'ERR_ASSERTION'
               expected: true
-              message: 'false == true'
-              name: 'AssertionError'
+              generatedMessage: true
+              name: 'AssertionError [ERR_ASSERTION]'
               operator: '=='
             ]
           ,
@@ -264,9 +267,10 @@ if Meteor.isClient
             type: 'error'
             args: [
               actual: false
+              code: 'ERR_ASSERTION'
               expected: true
-              message: 'false == true'
-              name: 'AssertionError'
+              generatedMessage: true
+              name: 'AssertionError [ERR_ASSERTION]'
               operator: '=='
             ]
   ,

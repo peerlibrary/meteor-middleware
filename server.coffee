@@ -24,22 +24,22 @@ class MiddlewarePublish
     for own key, value of @publish when key not in ['added', 'changed', 'removed', 'ready', 'stop', 'error']
       @[key] = value
 
-  added: (args...) =>
+  added: (args...) ->
     @_publishAdded args...
 
-  changed: (args...) =>
+  changed: (args...) ->
     @_publishChanged args...
 
-  removed: (args...) =>
+  removed: (args...) ->
     @_publishRemoved args...
 
-  ready: (args...) =>
+  ready: (args...) ->
     @_publishReady args...
 
-  stop: (args...) =>
+  stop: (args...) ->
     @_publishStop args...
 
-  error: (args...) =>
+  error: (args...) ->
     @_publishError args...
 
 export class PublishEndpoint
@@ -69,7 +69,7 @@ export class PublishEndpoint
 
       self.publish self.middlewares, publish
 
-  publish: (middlewares, publish) =>
+  publish: (middlewares, publish) ->
     if middlewares.length
       latestMiddleware = middlewares[middlewares.length - 1]
       otherMiddlewares = middlewares[0...middlewares.length - 1]
@@ -107,26 +107,26 @@ export class PublishEndpoint
     else
       @publishFunction.apply publish, publish.params()
 
-  use: (middleware) =>
+  use: (middleware) ->
     throw new Error "Middleware '#{ middleware }' is not an instance of a PublishMiddleware class" unless middleware instanceof PublishMiddleware
 
     @middlewares.push middleware
 
 export class PublishMiddleware
-  added: (publish, collection, id, fields) =>
+  added: (publish, collection, id, fields) ->
     publish.added collection, id, fields
 
-  changed: (publish, collection, id, fields) =>
+  changed: (publish, collection, id, fields) ->
     publish.changed collection, id, fields
 
-  removed: (publish, collection, id) =>
+  removed: (publish, collection, id) ->
     publish.removed collection, id
 
-  onReady: (publish) =>
+  onReady: (publish) ->
     publish.ready()
 
-  onStop: (publish) =>
+  onStop: (publish) ->
     publish.stop()
 
-  onError: (publish, error) =>
+  onError: (publish, error) ->
     publish.error error

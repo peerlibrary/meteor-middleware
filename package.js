@@ -10,7 +10,7 @@ Package.onUse(function (api) {
 
   // Core dependencies.
   api.use([
-    'coffeescript@2.0.3_1',
+    'coffeescript@2.0.3_3',
     'ecmascript',
     'underscore'
   ], 'server');
@@ -25,7 +25,7 @@ Package.onTest(function (api) {
   api.versionsFrom('METEOR@1.4.4.5');
 
   api.use([
-    'coffeescript@2.0.3_1',
+    'coffeescript@2.0.3_3',
     'ecmascript',
     'tinytest',
     'test-helpers',
